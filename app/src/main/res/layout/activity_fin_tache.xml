@@ -36,10 +36,10 @@
         android:layout_below="@+id/txtnumeroPanne"
         android:id="@+id/scrolllayout">
 
-        <LinearLayout
+        <GridLayout
             android:id="@+id/grillelayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/scrolllayout"
             android:layout_marginTop="37dp"
@@ -345,7 +345,7 @@
                 android:layout_columnSpan="3"
                 />
 
-        </LinearLayout>
+        </GridLayout>
     </ScrollView>
 
 </RelativeLayout>
