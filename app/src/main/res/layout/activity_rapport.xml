@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rapport"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="net.djeraservices.depanv2.depanv2.RapportActivity"
+    android:weightSum="1" android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewAndroidID"
+        android:hint="Android ID"
+        android:enabled="false" android:layout_marginBottom="@dimen/textViewMargin"/>
+
+    <TextView
+        android:id="@+id/textViewToken"
+        android:hint="Token de l'application"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="100dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_centerVertical="true"
+            android:text="Générer le Token"
+            android:id="@+id/buttonDisplayToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:background="@color/btnBackgroundColor"
+            android:textColor="@color/textColorBtn"
+            android:layout_margin="5dp"/>
+
+        <Button
+            android:layout_centerVertical="true"
+            android:text="Enregistrer le Token"
+            android:id="@+id/buttonRegisterToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:layout_margin="5dp"
+            android:background="@color/btnBackgroundColor"
+            android:textColor="@color/textColorBtn"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnMain"
+        android:text="Lancer Main class"/>
+
+</LinearLayout>

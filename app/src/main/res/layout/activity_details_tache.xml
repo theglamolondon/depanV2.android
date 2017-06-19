@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_details_tache"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="net.djeraservices.depanv2.depanv2.DetailsTache">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/mapwebview"
+        android:layout_marginBottom="10dp">
+
+    </WebView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/avatar_tools"
+            android:background="@drawable/tools"
+            android:layout_below="@+id/mapwebview"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/mapwebview"
+            android:layout_toEndOf="@+id/avatar_tools"
+            android:hint="Client ayant rencontré le problème"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:id="@+id/txtClientName" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:id="@+id/txtDetailsTache"
+            android:layout_below="@+id/avatar_tools"
+            android:hint="Description complète de la panne ainsi que les coordonées GPS"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDetailsTache"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Démarrer la navigation"
+                android:background="@drawable/btn_appareance"
+                android:layout_weight="1"
+                android:textColor="@color/textColorBtn"
+                android:layout_margin="10dp"
+                android:textSize="14sp"
+                android:id="@+id/btnNavigation" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Rediger le rapport de fin"
+                android:background="@drawable/btn_appareance"
+                android:layout_weight="1"
+                android:textColor="@color/textColorBtn"
+                android:layout_margin="10dp"
+                android:textSize="14sp"
+                android:id="@+id/btnReport" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

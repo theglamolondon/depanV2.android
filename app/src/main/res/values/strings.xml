@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DepanV2</string>
+    <string name="label_main_activity">Liste des taches</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+
+    <string name="title_activity_demarrage">DemarrageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_connexion">Connexion</string>
+</resources>

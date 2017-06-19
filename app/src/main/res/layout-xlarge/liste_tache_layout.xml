@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:background="@drawable/list_panne_appareance"
+    android:paddingBottom="10dp"
+    android:id="@+id/rLayout">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/avatar_tool"
+            android:background="@drawable/tools"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtclient"
+            android:hint="Nom du client numero"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="7dp"
+            android:layout_toEndOf="@+id/avatar_tool"
+            android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtclient"
+        android:layout_marginTop="3dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtDetails"
+            android:textColor="@color/textColor"
+            android:maxLines="10"
+            android:gravity="start|center"
+            android:hint="Details de chaque notification de l'application dkdjfk hdjhshdj ksdj ksdhdjshd sjdkjdh jdshdskjdh sjdshjsd hsdjsdh jdhdjhdsjdhsjsdhdjhddj dhjdhd jdhsjdshdshdsjhdj khsdkd hsksjshd jdhsdjh dsjh dsjd shsjh dsjdh jdshdsjs hjdhdjshd sjdshdjhdsddds sdsddssd ddsd sds ssds dssd"
+            android:layout_weight="3" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0">
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnMap"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/location_map"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnRapport"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/report_icon"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
