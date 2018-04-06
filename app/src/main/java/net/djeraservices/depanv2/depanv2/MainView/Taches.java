@@ -5,14 +5,20 @@ package net.djeraservices.depanv2.depanv2.MainView;
  */
 
 public class Taches {
-    private int id = 0;
-    private int priorite;
-    private String numero;
-    private String panne;
-    private String longitude;
-    private String latitude;
+    public int id = 0;
+    public int priorite;
+    public String numero;
+    public String panne;
+    public String longitude;
+    public String latitude;
+    public String detailrapport;
 
-    private String dateaffectation;
+    public String dateaffectation;
+    public String datedemarragenavigation;
+    public String dateheurecontact;
+    public String datedebutintervention;
+    public String dateheuredebutintervention;
+    public String dateheurefinnavigation;
 
     public final int PRIORITE_TRES_URGENT = 1;
     public final int PRIORITE_URGENT = 2;
@@ -26,6 +32,10 @@ public class Taches {
         this.longitude = longitude;
         this.latitude = latitude;
         this.dateaffectation = dateaffectation;
+
+        this.datedebutintervention = "";
+        this.dateheurefinnavigation = "";
+        this.dateheurecontact = "";
     }
 
     public Taches(){

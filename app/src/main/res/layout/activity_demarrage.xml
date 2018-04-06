@@ -1,69 +1,79 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:orientation="vertical"
+    android:background="#FFF"
     tools:context="net.djeraservices.depanv2.depanv2.DemarrageActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_width="584dp"
+        android:layout_height="871dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
-        <ImageView
-            android:layout_width="125dp"
-            android:layout_height="123dp"
-            android:src="@mipmap/ic_depan" />
-
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="123dp"
+                android:src="@mipmap/ic_depan" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/app_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Depan - v2"
+                android:textColor="#05662A"
+                android:textSize="50dp"
+                android:textAlignment="center"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="100dp"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/border_orange"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_version"
+                android:textColor="#999"
+                android:layout_alignParentBottom="true"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:layout_marginBottom="20dp"
+                />
+        </RelativeLayout>
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/app_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Depan - v2"
-            android:textColor="#555"
-            android:textSize="50dp"
-            android:textAlignment="center"/>
-
-        <ProgressBar
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            style="@style/Widget.AppCompat.Spinner"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="version 1.0.2"
-            android:textColor="#999"
-            android:layout_alignParentBottom="true"
-            android:textAlignment="center"
-            android:textSize="20dp"
-            android:layout_marginBottom="20dp"
-            />
-    </RelativeLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -2,6 +2,8 @@ package net.djeraservices.depanv2.depanv2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 /**
  * Created by BW.KOFFI on 18/02/2017.
@@ -13,6 +15,7 @@ public class SharedPrefManager {
     private static final String SHARE_PREF_DEPAN_V2 = "appPreference";
     public static final String APPAREIL = "appareil";
     public static final String EQUIPE = "team";
+    public static final String BON_EN_COURS = "bonEnCours";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -67,5 +70,12 @@ public class SharedPrefManager {
     public String getData(String key){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARE_PREF_DEPAN_V2,Context.MODE_PRIVATE);
         return sharedPreferences.getString(key,null);
+    }
+
+    public boolean deleteData(String key){
+        SharedPreferences.Editor editor = mCtx.getSharedPreferences(SHARE_PREF_DEPAN_V2,Context.MODE_PRIVATE).edit();
+        editor.remove(key);
+        editor.apply();
+        return true;
     }
 }

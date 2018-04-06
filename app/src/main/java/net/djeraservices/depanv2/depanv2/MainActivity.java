@@ -2,16 +2,14 @@ package net.djeraservices.depanv2.depanv2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,6 +25,7 @@ import net.djeraservices.depanv2.depanv2.MainView.Taches;
 import net.djeraservices.depanv2.depanv2.bdd.model.Equipe;
 import net.djeraservices.depanv2.depanv2.location.LocationService;
 import net.djeraservices.depanv2.depanv2.webservice.DepanV2WebApi;
+import net.djeraservices.depanv2.depanv2.webservice.IActionAfterHttpRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
         this.getListeTache();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_menu, menu);
+        return true;
+    }
 
     private void fillListView(final List<Taches> listeTaches){
         TacheAdapter adapter = new TacheAdapter(MainActivity.this,listeTaches);
@@ -165,5 +169,63 @@ public class MainActivity extends AppCompatActivity {
             Log.e("JSON Error",e.getMessage());
         }
         return taches;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.app_bar_logout :
+                logout();
+                return true;
+
+            case R.id.app_bar_quart:
+                showQuart();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logout()
+    {
+        Toast.makeText(this,"Déconnexion de l'équipe",Toast.LENGTH_LONG).show();
+        SharedPrefManager.getInstance(this).deleteData(SharedPrefManager.EQUIPE);
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                DepanV2WebApi api = new DepanV2WebApi(MainActivity.this);
+                api.logout(new IActionAfterHttpRequest() {
+                    @Override
+                    public void doSomething(String data) {
+                        startLoginView();
+                    }
+
+                    @Override
+                    public void doSomething(JSONArray data) {
+                        startLoginView();
+                    }
+
+                    @Override
+                    public void error(String error) {
+                        Toast.makeText(MainActivity.this,error,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        r.run();
+
+    }
+
+    private void startLoginView(){
+        Intent intent = new Intent(MainActivity.this,DemarrageActivity.class);
+        startActivity(intent);
+    }
+
+    private void showQuart()
+    {
+        Toast.makeText(this,"Quart des équipes",Toast.LENGTH_LONG).show();
     }
 }

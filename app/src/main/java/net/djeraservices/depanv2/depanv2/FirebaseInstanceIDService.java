@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -52,7 +53,6 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
         //we will save the token in sharedpreferences later
         //saving the token on shared preferences
         SharedPrefManager.getInstance(getApplicationContext()).saveDeviceToken(token);
-
     }
 
     private void saveTokenOnServer(final String token, final String androidID) {

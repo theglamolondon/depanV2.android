@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ECF0F5"
     android:orientation="vertical"
+    android:theme="@style/Theme.Design.Light.NoActionBar"
     tools:context="net.djeraservices.depanv2.depanv2.ConnexionActivity">
 
     <View
@@ -14,7 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <View
             android:layout_width="match_parent"
@@ -28,7 +30,9 @@
             android:background="#FFF"
             android:orientation="vertical"
             android:padding="15dp"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:elevation="5dp"
+            android:translationZ="3dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -41,12 +45,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/list_panne_appareance"
+                style="@style/Widget.AppCompat.Spinner"
                 android:clickable="true"
                 android:hint="Sélectionner votre équipe"
                 android:paddingEnd="4sp"
                 android:paddingStart="4sp"
-                android:paddingTop="10sp"
+                android:paddingTop="0sp"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -67,7 +71,8 @@
                 android:textColor="#fff"
                 android:textAlignment="center"
                 android:text="Connexion"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 

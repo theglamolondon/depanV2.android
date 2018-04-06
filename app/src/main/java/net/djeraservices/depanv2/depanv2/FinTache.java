@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,8 +30,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import net.djeraservices.depanv2.depanv2.MainView.Taches;
+import net.djeraservices.depanv2.depanv2.bdd.model.Equipe;
 import net.djeraservices.depanv2.depanv2.webservice.DepanV2WebApi;
 import net.djeraservices.depanv2.depanv2.webservice.IActionAfterHttpRequest;
 import net.djeraservices.depanv2.depanv2.webservice.NatureLoader;
@@ -52,11 +55,11 @@ import java.util.Map;
 public class FinTache extends AppCompatActivity  implements View.OnClickListener{
 
     private TextView txtnumeroPanne;
-    private ImageView avatar_tools;
+    private View view_priorite;
     private EditText txtrapport;
     private TextView txtdateheurecontact;
-    private TextView dateheurefinintervention;
-    private TextView dateheuredebutintervention;
+    private TextView txtdateheurefinintervention;
+    private TextView txtdateheuredebutintervention;
     private TextView txtdateheuredemande;
     private TextView txtdateheurearrivee;
     private TextView txtfamille;
@@ -69,6 +72,7 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
     private RadioButton assistance;
     protected ProgressDialog progressDialog;
     private Calendar calendrier = null;
+    Taches tache;
     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, Locale.FRANCE);
     String dateheure = null;
     AlertDialog.Builder familleDialog = null;
@@ -114,8 +118,8 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
 
     private void updateValue(TextView view) throws ParseException
     {
-        view.setText(calendrier.get(Calendar.DAY_OF_MONTH)+"/"+(calendrier.get(Calendar.MONTH)+1)+"/"+calendrier.get(Calendar.YEAR)+" "+calendrier.get(Calendar.HOUR_OF_DAY)+":"+calendrier.get(Calendar.MINUTE));
-        //txtdebut.setText(dateFormat.format(calendrier.getTime()));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        view.setText(sdf.format(calendrier.getTime()));
     }
 
     private IActionAfterHttpRequest natureHandler = new IActionAfterHttpRequest() {
@@ -150,7 +154,12 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
                 }
             });
             natureDialog.create();
-            progressDialog.hide();
+            progressDialog.dismiss();
+        }
+
+        @Override
+        public void error(String error) {
+            //
         }
     };
 
@@ -158,7 +167,7 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
         @Override
         public void doSomething(String data) {
             Toast.makeText(FinTache.this,data,Toast.LENGTH_LONG).show();
-            progressDialog.hide();
+            progressDialog.dismiss();
         }
 
         @Override
@@ -204,7 +213,12 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
             });
             familleDialog.create();
 
-            progressDialog.hide();
+            progressDialog.dismiss();
+        }
+
+        @Override
+        public void error(String error) {
+            Toast.makeText(FinTache.this,"Impossible de charger les familles",Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -213,15 +227,45 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fin_tache);
 
+        //Récupération des données
+        /*Intent intent = getIntent();
+        Taches tache = new Taches();
+        tache.setNumero(intent.getStringExtra("numero"));
+        tache.setPanne(intent.getStringExtra("panne"));
+        tache.setLongitude(intent.getStringExtra("longitude"));
+        tache.setLatitude(intent.getStringExtra("latitude"));*/
+
+        SharedPrefManager shared = SharedPrefManager.getInstance(this);
+        Gson gson = new Gson();
+
+        this.tache = gson.fromJson(shared.getData(SharedPrefManager.BON_EN_COURS), Taches.class);
+
+
+        //initialisation des champs
+
         this.calendrier = Calendar.getInstance(Locale.FRENCH);
 
         txtdateheurecontact = (TextView) findViewById(R.id.txtdateheurecontact);
-        txtdateheuredemande = (TextView) findViewById(R.id.txtdateheuredemande);
-        dateheurefinintervention = (TextView) findViewById(R.id.dateheurefinintervention);
-        dateheuredebutintervention = (TextView) findViewById(R.id.dateheuredebutintervention);
-        txtdateheurearrivee = (TextView) findViewById(R.id.txtdateheurearrivee);
+        txtdateheurecontact.setText(this.tache.dateheurecontact);
+        //txtdateheuredemande = (TextView) findViewById(R.id.txtdateheuredemande);
+        //dateheurefinintervention = (TextView) findViewById(R.id.dateheurefinintervention);
+        txtdateheuredebutintervention = (TextView) findViewById(R.id.dateheuredebutintervention);
+        txtdateheuredebutintervention.setText(this.tache.datedebutintervention);
+        //txtdateheurearrivee = (TextView) findViewById(R.id.txtdateheurearrivee);
         statutGroup = (RadioGroup) findViewById(R.id.radioGroup);
-        assistanceGroup = (RadioGroup) findViewById(R.id.assistanceGroup);
+        //assistanceGroup = (RadioGroup) findViewById(R.id.assistanceGroup);
+
+        this.txtnumeroPanne = (TextView) findViewById(R.id.txtnumeroPanne);
+        txtnumeroPanne.setText(this.tache.numero);
+
+        //this.view_priorite = findViewById(R.id.view_priorite);
+        this.txtrapport = (EditText) findViewById(R.id.txtrapport);
+        this.txtrapport.setText(this.tache.detailrapport);
+
+        this.btnValidate = (Button) findViewById(R.id.btnValidate);
+        this.btnSave = (Button) findViewById(R.id.btnSave);
+        /*this.btnSave.setEnabled(false);
+        this.btnSave.setBackgroundColor(Color.rgb(200,200,200));*/
 
         txtfamille = (TextView)findViewById(R.id.txtfamille);
         txtnature = (TextView)findViewById(R.id.txtnature);
@@ -240,11 +284,11 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
         });
 
         List<TextView> viewTab = new ArrayList<>();
-        viewTab.add(txtdateheuredemande);
-        viewTab.add(txtdateheurearrivee);
+        //viewTab.add(txtdateheuredemande);
+        //viewTab.add(txtdateheurearrivee);
         viewTab.add(txtdateheurecontact);
-        viewTab.add(dateheuredebutintervention);
-        viewTab.add(dateheurefinintervention);
+        viewTab.add(txtdateheuredebutintervention);
+        //viewTab.add(dateheurefinintervention);
 
         for(final TextView view : viewTab){
             view.setClickable(true);
@@ -267,21 +311,6 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
 
         r.run();
 
-        //Récupération des données
-        Intent intent = getIntent();
-        Taches tache = new Taches();
-        tache.setNumero(intent.getStringExtra("numero"));
-        tache.setPanne(intent.getStringExtra("panne"));
-        tache.setLongitude(intent.getStringExtra("longitude"));
-        tache.setLatitude(intent.getStringExtra("latitude"));
-
-        this.txtnumeroPanne = (TextView) findViewById(R.id.txtnumeroPanne);
-        this.avatar_tools = (ImageView) findViewById(R.id.avatar_tool);
-        this.txtrapport = (EditText) findViewById(R.id.txtrapport);
-
-        this.btnValidate = (Button) findViewById(R.id.btnValidate);
-        this.btnSave = (Button) findViewById(R.id.btnSave);
-
         this.txtnumeroPanne.setText(tache.getNumero());
 
         this.btnValidate.setOnClickListener(this);
@@ -290,16 +319,44 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if(v == this.btnSave || v == this.btnValidate){
-            progressDialog = new ProgressDialog(this);
+        if(v == this.btnValidate){
+
+            Log.e("SAVING","Clic sur bouton");
+
+            progressDialog = new ProgressDialog(FinTache.this);
             progressDialog.setMessage("Sauvegarde du rapport...");
             progressDialog.show();
 
-            this.sendRapport(this,android.provider.Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID),this.txtnumeroPanne.getText().toString(),this.txtrapport.getText().toString());
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                sendRapport(txtnumeroPanne.getText().toString(),txtrapport.getText().toString());
+                }
+            };
+            r.run();
+        }else if(v == this.btnSave){
+            progressDialog = new ProgressDialog(FinTache.this);
+            progressDialog.setMessage("Enregistrement du rapport sur la tablette");
+            progressDialog.show();
+
+            this.tache.detailrapport = txtrapport.getText().toString();
+            this.tache.dateheurecontact = txtdateheurecontact.getText().toString();
+            this.tache.dateheuredebutintervention = txtdateheuredebutintervention.getText().toString();
+
+            SharedPrefManager shared = SharedPrefManager.getInstance(FinTache.this);
+            Gson gson = new Gson();
+            shared.storeData(SharedPrefManager.BON_EN_COURS,gson.toJson(this.tache));
+
+            Log.e("##Tache",gson.toJson(this.tache));
+
+            Intent intent = new Intent(getBaseContext(),MainActivity.class);
+            startActivity(intent);
+
+            this.finish();
         }
     }
 
-    private void sendRapport(final Context ctx, final String androidID, final String numero, final String rapportTexte)
+    private void sendRapport(final String numero, final String rapportTexte)
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, DepanV2WebApi.URL_SEND_REPORT_TACHES,
                 new Response.Listener<String>() {
@@ -308,10 +365,15 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
                         try {
                             Log.i("#### Rapport ####",response);
                             JSONObject obj = new JSONObject(response);
-                            Toast.makeText(ctx,"Rapport enregistré avec succès",Toast.LENGTH_LONG).show();
+                            Toast.makeText(FinTache.this,obj.getString("message"),Toast.LENGTH_LONG).show();
 
-                            Intent intent = new Intent(FinTache.this,MainActivity.class);
-                            startActivity(intent);
+                            if(obj.getInt("code") == 0){
+                                Intent intent = new Intent(FinTache.this,MainActivity.class);
+                                startActivity(intent);
+                            }
+
+                            progressDialog.hide();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -320,41 +382,49 @@ public class FinTache extends AppCompatActivity  implements View.OnClickListener
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressDialog.hide();
                         Log.e("VolleyError", "Erreur d'accès au réseau (rapport)");
-
-                        Toast.makeText(ctx,"Rapport non valide! Veuillez vérifier que tous les champs ont été remplis SVP.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(FinTache.this,"Rapport non valide! Veuillez vérifier que tous les champs ont été remplis SVP.",Toast.LENGTH_LONG).show();
                     }
-                }) {
+                })
+        {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.FRENCH);
 
-                params.put("rapport", rapportTexte);
-                params.put("android_id", androidID);
+                //params.put("android_id", androidID);
                 params.put("numero", numero);
                 params.put("datefinintervention", sdf.format(Calendar.getInstance().getTime()));
 
                 //New Rapport
                 statut = (RadioButton) findViewById(statutGroup.getCheckedRadioButtonId());
-                assistance = (RadioButton) findViewById(assistanceGroup.getCheckedRadioButtonId());
+                //assistance = (RadioButton) findViewById(assistanceGroup.getCheckedRadioButtonId());
 
+                params.put("rapport", rapportTexte);
                 params.put("statut",statut.getText().toString());
-                params.put("assistancexterne",assistance.getText().toString());
+                params.put("assistancexterne","Aucun"); //assistance.getText().toString()
                 params.put("dateheurecontact",txtdateheurecontact.getText().toString());
-                params.put("dateheuredebutintervention",dateheuredebutintervention.getText().toString());
-                params.put("dateheurefinintervention",dateheurefinintervention.getText().toString());
+                params.put("datedemarragenavigation",tache.datedemarragenavigation);
+                params.put("dateheuredebutintervention",txtdateheuredebutintervention.getText().toString());
+                params.put("dateheurefinintervention",sdf.format(Calendar.getInstance().getTime()));
                 params.put("detailrapport",txtrapport.getText().toString());
-                params.put("dateheuredemande",txtdateheuredemande.getText().toString());
-                params.put("dateheurearrivee",txtdateheurearrivee.getText().toString());
+                params.put("datedebutintervention", tache.datedebutintervention);
+                params.put("dateheurefinnavigation",tache.dateheurefinnavigation);
+                //params.put("dateheuredemande",txtdateheuredemande.getText().toString());
+                //params.put("dateheurearrivee",txtdateheurearrivee.getText().toString());
                 params.put("nature_id",String.valueOf(idNature));
 
+                String equipeJSON = SharedPrefManager.getInstance(FinTache.this).getData(SharedPrefManager.EQUIPE);
+                Gson gson = new Gson();
+                Equipe equipe = gson.fromJson(equipeJSON, Equipe.class);
+
+                params.put("equipe_id",String.valueOf(equipe.getId()));
                 return params;
             }
         };
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
     }
 }

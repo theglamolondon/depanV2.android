@@ -61,6 +61,7 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
 
         final ArrayList<Equipe> _equipes = equipes;
 
+        //this.getActionBar().hide();
 
         txtequipeLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,13 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
                 equipeDialog.show();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //outState.put
     }
 
     private ArrayList<Equipe> getEquipes(JSONArray jsonArray){
@@ -117,6 +125,15 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
 
     private void login()
     {
+        if(txtequipeLogin.getTag() == null){
+            Toast.makeText(this,"Veuillez choisir votre équipe SVP",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(txtpassword.getText().toString().equals("")){
+            Toast.makeText(this,"Veuillez saisir votre mot de passe SVP",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Authentification de l'équipe...");
         progressDialog.show();
@@ -154,6 +171,11 @@ public class ConnexionActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void doSomething(JSONArray data) {
 
+            }
+
+            @Override
+            public void error(String error) {
+                Toast.makeText(ConnexionActivity.this,"Erreur d'accès à internet. "+error,Toast.LENGTH_LONG).show();
             }
         });
     }

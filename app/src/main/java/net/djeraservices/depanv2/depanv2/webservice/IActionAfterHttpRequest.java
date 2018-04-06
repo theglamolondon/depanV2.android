@@ -10,4 +10,5 @@ import org.json.JSONObject;
 public interface IActionAfterHttpRequest {
     public void doSomething(String data);
     public void doSomething(JSONArray data);
+    public void error(String error);
 }
